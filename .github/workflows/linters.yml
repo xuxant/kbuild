@@ -1,0 +1,30 @@
+name: Linter
+
+on: [push, pull_request]
+
+permissions: read-all
+
+jobs:
+  build:
+    name: Linter
+    strategy:
+      matrix:
+        go: ['1.21']
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: setup go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.54
+          args: --timeout 3m --config .golangci.yml

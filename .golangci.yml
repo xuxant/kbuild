@@ -1,0 +1,49 @@
+run:
+  concurrency: 4
+  timeout: 5m
+  issues-exit-code: 2
+  tests: false
+
+output:
+  print-issued-lines: false
+  print-linter-name: true
+  uniq-by-line: false
+  path-prefix: ""
+  sort-results: true
+
+linters:
+  disable-all: true
+
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - revive
+    - stylecheck
+    - cyclop
+    - gosec
+    - bodyclose
+    - asciicheck
+    - tagalign
+    - tagliatelle
+    - forcetypeassert
+    - nilnil
+
+linters-settings:
+  cyclop:
+    max-complexity: 10
+    package-average: 4.0
+    skip-tests: true
+
+  nilnil:
+    checked-types:
+      - ptr
+      - func
+      - iface
+      - map
+      - chan
+  nakedret:
+    max-func-lines: 30
