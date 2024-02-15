@@ -1,8 +1,14 @@
 package main
 
-import "github.com/xuxant/kbuild/cmd/kbuild"
+import (
+	"github.com/xuxant/kbuild/cmd/kbuild"
+	"log"
+)
 
 func main() {
 	cmd := kbuild.NewBuildCommand()
-	cmd.Execute()
+	err := cmd.Execute()
+	if err != nil {
+		log.Fatal(err)
+	}
 }

@@ -19,7 +19,6 @@ var (
 	kubeConfigOnce      sync.Once
 	kubeConfigFile      string
 	kubeContext         string
-	configureOnce       sync.Once
 	kubeConfig          clientcmd.ClientConfig
 	checkPermissionOnce sync.Once
 )
