@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-var version, gitCommit, buildDate, client string
+var version, gitCommit, buildDate string
 var platform = fmt.Sprintf("%s/%s", runtime.GOOS, runtime.GOARCH)
 
 type Info struct {

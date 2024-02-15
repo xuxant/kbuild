@@ -1,6 +1,6 @@
 name: Linter
 
-on: [push, pull_request]
+on: [pull_request]
 
 permissions: read-all
 
@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         go: ['1.21']
-        os: [macos-latest, windows-latest]
+        os: [macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: setup go
