@@ -1,10 +1,13 @@
 package kbuild
 
 import (
+	"context"
 	"fmt"
 	"github.com/spf13/cobra"
+	"github.com/xuxant/kbuild/pkg/build"
 	k8s "github.com/xuxant/kbuild/pkg/kubernetes"
 	"github.com/xuxant/kbuild/pkg/options"
+	"github.com/xuxant/kbuild/pkg/output/log"
 	"os"
 )
 
@@ -27,7 +30,13 @@ func newBuildCommand() *cobra.Command {
 			}
 		},
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println("Subcommand ran")
+			tag, _ := cmd.Flags().GetString("tag")
+			buildContext, _ := cmd.Flags().GetString("context")
+			dockerfile, _ := cmd.Flags().GetString("dockerfile")
+			err := build.InitializeBuild(tag, buildContext, dockerfile)
+			if err != nil {
+				log.Entry(context.TODO()).Infof("initialize kaniko build: %s", err)
+			}
 		},
 	}
 

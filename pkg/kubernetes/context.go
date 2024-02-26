@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/xuxant/kbuild/pkg/options"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -51,20 +52,19 @@ func CheckPermissions() (bool, map[string]string) {
 		}
 		//	Check Create Pod
 		_, err = clientSet.CoreV1().Pods(cfg.Namespace).Create(context.TODO(), &corev1.Pod{}, metav1.CreateOptions{})
-		if err != nil {
+
+		if errors.IsForbidden(err) {
 			msg["CreatePod"] = err.Error()
 			return
 		}
 
 		logs := clientSet.CoreV1().Pods(cfg.Namespace).GetLogs("pod-name", &corev1.PodLogOptions{})
 		_, err = logs.Stream(context.Background())
-		if err != nil {
+		if !errors.IsNotFound(err) {
 			msg["PodLog"] = err.Error()
 			return
 		}
-		if err == nil {
-			connection = true
-		}
+		connection = true
 
 	})
 	return connection, msg

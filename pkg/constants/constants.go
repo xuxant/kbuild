@@ -7,4 +7,6 @@ const (
 	Build = Phase("Build")
 
 	DefaultDockerFilePath = "Dockerfile"
+	RandomPodCharacter    = int64(6)
+	DefaultKanikoImage    = "gcr.io/kaniko-project/executor"
 )
